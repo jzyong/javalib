@@ -21,6 +21,7 @@
         <skipTests>true</skipTests>
     </properties>
 
+
     <build>
         <plugins>
             <plugin>
@@ -34,4 +35,12 @@
             </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub jzyong Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/jzyong/javalib</url>
+        </repository>
+    </distributionManagement>
 </project>

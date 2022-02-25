@@ -11,5 +11,12 @@
     <description>数学计算工具包</description>
     <artifactId>javalib-math</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>javalib-base</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>
