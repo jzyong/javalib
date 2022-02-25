@@ -17,3 +17,5 @@ javalib-network             | Network communication component
     </dependency>
 
 # TODO
+* script 
+* Network Message handler
