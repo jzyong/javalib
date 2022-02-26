@@ -6,10 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FilenameFilter;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -355,6 +352,47 @@ public final class ClassUtil {
             }
         }
         return fmmap;
+    }
+
+    public static byte[] toBytes(Serializable obj) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(baos);
+        try {
+            oos.writeObject(obj);
+            oos.flush();
+            return baos.toByteArray();
+        } finally {
+            oos.close();
+            baos.close();
+        }
+    }
+
+    public static Object getObject(byte[] buf) throws IOException, ClassNotFoundException {
+        ByteArrayInputStream bais = new ByteArrayInputStream(buf);
+
+        ObjectInputStream ois = new ObjectInputStream(bais);
+        try {
+            return ois.readObject();
+        } finally {
+            ois.close();
+            bais.close();
+        }
+    }
+
+    /**
+     * 深拷贝
+     * 效率,高于Fastjson以及BeanUtils
+     *
+     * @param obj
+     * @return
+     */
+    public static Object deepCopy(Serializable obj) {
+        try {
+            return getObject(toBytes(obj));
+        } catch (Exception e) {
+            LOGGER.error("深拷贝", e);
+        }
+        return null;
     }
 
 }
