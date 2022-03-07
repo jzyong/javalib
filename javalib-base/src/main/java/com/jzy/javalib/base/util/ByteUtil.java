@@ -3,6 +3,7 @@ package com.jzy.javalib.base.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.Charset;
@@ -941,4 +942,46 @@ public class ByteUtil {
     public static boolean checkIntFlag(int src, int index) {
         return (src & (1 << index)) != 0;
     }
+
+    public static byte[] toBytes(Serializable obj) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(baos);
+        try {
+            oos.writeObject(obj);
+            oos.flush();
+            return baos.toByteArray();
+        } finally {
+            oos.close();
+            baos.close();
+        }
+    }
+
+    public static Object getObject(byte[] buf) throws IOException, ClassNotFoundException {
+        ByteArrayInputStream bais = new ByteArrayInputStream(buf);
+
+        ObjectInputStream ois = new ObjectInputStream(bais);
+        try {
+            return ois.readObject();
+        } finally {
+            ois.close();
+            bais.close();
+        }
+    }
+
+    /**
+     * 深拷贝
+     * 效率,高于Fastjson以及BeanUtils
+     *
+     * @param obj
+     * @return
+     */
+    public static Object deepCopy(Serializable obj) {
+        try {
+            return getObject(toBytes(obj));
+        } catch (Exception e) {
+            LOGGER.error("深拷贝", e);
+        }
+        return null;
+    }
+
 }
