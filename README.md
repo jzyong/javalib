@@ -13,7 +13,7 @@ javalib-network             | Network communication component
     <dependency>
       <groupId>com.jzy.javalib</groupId>
       <artifactId>javalib</artifactId>
-      <version>0.0.2</version>
+      <version>0.0.4</version>
     </dependency>
 
 # TODO
