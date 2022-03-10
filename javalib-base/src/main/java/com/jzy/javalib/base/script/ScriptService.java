@@ -113,7 +113,7 @@ public  class ScriptService {
 		if (scripts != null) {
 			return scripts.values();
 		}
-		return new ArrayList<>();
+		return  Collections.emptyList();
 	}
 
 	/**
@@ -128,7 +128,7 @@ public  class ScriptService {
 		if (scripts != null) {
 			return (Collection<E>) scripts.values();
 		}
-		return new ArrayList<>();
+		return Collections.emptyList();
 	}
 
 	/**
