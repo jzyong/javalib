@@ -5,7 +5,7 @@
     <parent>
         <artifactId>javalib</artifactId>
         <groupId>com.jzy.javalib</groupId>
-        <version>0.0.4</version>
+        <version>${javalib.version}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <description>网络通信工具包</description>
@@ -23,7 +23,26 @@
             <artifactId>netty-all</artifactId>
             <version>4.1.74.Final</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>3.19.6</version>
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-netty-shaded</artifactId>
+            <version>1.45.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-protobuf</artifactId>
+            <version>1.45.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-stub</artifactId>
+            <version>1.45.0</version>
+        </dependency>
     </dependencies>
 
 </project>
