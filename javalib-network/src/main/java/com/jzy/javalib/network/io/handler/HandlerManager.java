@@ -14,8 +14,10 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author jzy
  * @mail 359135103@qq.com
  */
-public class HandlerService implements IHandlerLoader {
-    private static final Logger LOGGER = LoggerFactory.getLogger(HandlerService.class);
+public class HandlerManager implements IHandlerLoader {
+    private static final Logger LOGGER = LoggerFactory.getLogger(HandlerManager.class);
+
+    private static HandlerManager handlerManager;
 
     /**
      * TCP:{MID:消息处理Bean}
@@ -31,6 +33,21 @@ public class HandlerService implements IHandlerLoader {
      */
     Map<String, Class<? extends RpcHandler>> rpcHandlerClasses = new ConcurrentHashMap<>();
 
+
+    public static HandlerManager getInstance() {
+        if (handlerManager == null) {
+            synchronized (HandlerManager.class) {
+                if (handlerManager == null) {
+                    handlerManager = new HandlerManager();
+                }
+            }
+        }
+        return handlerManager;
+    }
+
+    private HandlerManager() {
+
+    }
 
     @Override
     public void loadHandler(Class<?> defineClass) {
@@ -90,6 +107,7 @@ public class HandlerService implements IHandlerLoader {
 
     /**
      * 获取Rpc处理器
+     *
      * @param path
      * @return
      */

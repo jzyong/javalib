@@ -25,9 +25,10 @@ import java.util.function.Predicate;
  *
  * @author jzy
  */
-public final class ScriptService {
+public final class ScriptManager {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ScriptService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ScriptManager.class);
+    private static ScriptManager scriptManager;
     /**
      * jdk版本
      */
@@ -54,7 +55,7 @@ public final class ScriptService {
     Map<String, IScript> nameScriptMap = new ConcurrentHashMap<>();
 
 
-    public ScriptService() {
+    private ScriptManager() {
         String dir = System.getProperty("user.dir");
         String path = dir + "-scripts" + File.separator + "src" + File.separator + "main" + File.separator + "java"
                 + File.separator;
@@ -63,6 +64,18 @@ public final class ScriptService {
         setSource(path, outpath, jarsDir);
         LOGGER.info("项目路径：{} 脚本路径：{} 输出路径：{} jar路径：{}", dir, path, outpath, jarsDir);
     }
+
+    public static ScriptManager getInstance(){
+        if (scriptManager==null){
+            synchronized (ScriptManager.class){
+                if (scriptManager==null){
+                    scriptManager=new ScriptManager();
+                }
+            }
+        }
+        return scriptManager;
+    }
+
 
 
     public final void setSource(String source, String out, String jarsDir) {

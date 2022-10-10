@@ -1,6 +1,6 @@
 package com.jzy.javalib.network.netty.http;
 
-import com.jzy.javalib.base.script.ScriptService;
+import com.jzy.javalib.base.script.ScriptManager;
 import com.jzy.javalib.base.util.TimeUtil;
 import com.jzy.javalib.network.io.handler.HttpHandler;
 import com.jzy.javalib.network.io.message.MsgUtil;
@@ -34,7 +34,7 @@ public abstract class HttpServerIoHandler extends ChannelInboundHandlerAdapter {
      */
     Map<String, Class<? extends HttpHandler>> httpHandlerClasses = new ConcurrentHashMap<>();// 存HTTP消息处理类
 
-    ScriptService scriptService;
+    ScriptManager scriptManager;
 
 
     @Override
