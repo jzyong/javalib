@@ -63,13 +63,18 @@ public final class FileUtil {
      * @return
      * @throws IOException
      */
-    public static boolean createFile(File file) throws IOException {
-        if (!file.exists()) {
-            if (file.getParentFile() != null) {
-                makeDir(file.getParentFile());
+    public static boolean createFile(File file)  {
+        try {
+            if (!file.exists()) {
+                if (file.getParentFile() != null) {
+                    makeDir(file.getParentFile());
+                }
             }
+            return file.createNewFile();
+        } catch (Exception e) {
+            log.error("创建文件", e);
         }
-        return file.createNewFile();
+        return false;
     }
 
     /**
@@ -118,13 +123,22 @@ public final class FileUtil {
     }
     //</editor-fold>
 
-    public static String readTxtFile(String path, String fileName) {
-        return readTxtFile(path + File.separatorChar + fileName);
+    public static String readTxtFile(String path, String fileName, String encoding) {
+        return readTxtFile(path + File.separatorChar + fileName, encoding);
     }
 
+    /**
+     * 读取文件内容
+     *
+     * @param filePath
+     * @return
+     */
     public static String readTxtFile(String filePath) {
+        return readTxtFile(filePath, "UTF-8");
+    }
+
+    public static String readTxtFile(String filePath, String encoding) {
         try {
-            String encoding = "UTF-8";
             File file = new File(filePath);
             if (file.isFile() && file.exists()) { //判断文件是否存在
                 InputStreamReader read = new InputStreamReader(
@@ -144,6 +158,19 @@ public final class FileUtil {
             log.error("读取文件内容出错", e);
         }
         return null;
+    }
+
+    public static boolean writeTxtFile(String content, File fileName, String encoding) {
+        FileOutputStream o = null;
+        try {
+            o = new FileOutputStream(fileName);
+            o.write(content.getBytes(encoding));
+            o.close();
+            return true;
+        } catch (Exception e) {
+            log.error("写入文件内容出错", e);
+        }
+        return false;
     }
 
     /**
