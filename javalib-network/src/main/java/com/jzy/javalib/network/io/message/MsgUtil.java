@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import java.net.InetSocketAddress;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 消息发送工具
@@ -52,6 +53,27 @@ public class MsgUtil {
      * 客户端消息长度，不包括自身
      */
     public static final int ClientHeaderExcludeLength = 12;
+
+    /**
+     * proto 编号1的默认值，proto2支持，proto3不支持了
+     */
+    public static final int MessageIdNumberOneDefaultValue = 1;
+
+    /**
+     * proto 协议名称
+     */
+    public static final int MessageIdProtoName = 2;
+
+
+    /**
+     * 消息id映射规则
+     */
+    public static int MessageIdRule = MessageIdProtoName;
+
+    /**
+     * 消息名称和ID对应关系
+     */
+    public static Map<String, Integer> MessageNameIds;
 
     /**
      * 发送内部消息 IDMessage
@@ -102,10 +124,18 @@ public class MsgUtil {
      * @return
      */
     public static int getMessageID(final Message message) {
-        Descriptors.EnumValueDescriptor field = (Descriptors.EnumValueDescriptor) message
-                .getField(message.getDescriptorForType().findFieldByNumber(1));
-        int msgID = field.getNumber();
-        return msgID;
+        if (MessageIdRule == MessageIdNumberOneDefaultValue) {
+            Descriptors.EnumValueDescriptor field = (Descriptors.EnumValueDescriptor) message
+                    .getField(message.getDescriptorForType().findFieldByNumber(1));
+            return field.getNumber();
+        } else {
+            Integer mid = MessageNameIds.get(message.getClass().getSimpleName());
+            if (mid == null) {
+                LOGGER.warn("协议 {} 没有定义合规的消息ID", message);
+                return 0;
+            }
+            return mid;
+        }
     }
 
     /**
