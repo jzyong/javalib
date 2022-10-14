@@ -14,11 +14,10 @@ import org.slf4j.LoggerFactory;
 import java.util.function.Consumer;
 
 /**
+ * Tcp 服务器
  * @author jzyong
  * @mail 359135103@qq.com
  */
-//@Component
-//@Scope("prototype")
 public class TcpServer {
 
 	private static Logger LOGGER = LoggerFactory.getLogger(TcpServer.class);
