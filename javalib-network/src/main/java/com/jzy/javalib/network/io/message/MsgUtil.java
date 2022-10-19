@@ -131,7 +131,7 @@ public class MsgUtil {
         } else {
             Integer mid = MessageNameIds.get(message.getClass().getSimpleName());
             if (mid == null) {
-                LOGGER.warn("协议 {} 没有定义合规的消息ID", message);
+                LOGGER.warn("协议 {} 没有定义合规的消息ID", message.getClass().getSimpleName());
                 return 0;
             }
             return mid;

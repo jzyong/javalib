@@ -8,14 +8,13 @@ javalib-math                | math util
 javalib-network             | Network communication component
 
 
-# Start
+## Start
 
     <dependency>
       <groupId>com.jzy.javalib</groupId>
       <artifactId>javalib</artifactId>
-      <version>0.0.6</version>
+      <version>0.0.7</version>
     </dependency>
 
-# TODO
-* Network Message handler
+### TODO
 * add document
